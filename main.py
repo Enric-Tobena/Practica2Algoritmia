@@ -31,7 +31,19 @@ def shipDetectorRecursivo(image):
     imageToAnalyze = setupBorders(image)
     positions = []
 
-    return positions
+    return analizarEntornoRecursivo(imageToAnalyze, positions, 1, 1)
+
+
+def analizarEntornoRecursivo(imageToAnalyze, positions, i, j):
+    if i == len(imageToAnalyze) - 2 and j == len(imageToAnalyze) - 1:
+        return positions
+    if j == len(imageToAnalyze) - 1:
+        return analizarEntornoRecursivo(imageToAnalyze, positions, i + 1, 1)
+
+    if smallerSides(i, j, imageToAnalyze) and smallerDiagonals(i, j, imageToAnalyze):
+        positions.append([i - 1, j - 1])
+        
+    return analizarEntornoRecursivo(imageToAnalyze, positions, i, j + 1)
 
 
 def setupBorders(image):
